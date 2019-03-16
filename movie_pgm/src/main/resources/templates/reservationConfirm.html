@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" media="all"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" media="all" th:href="@{/css/cancel.css}"/>
+<meta charset="UTF-8">
+<title>reservationConfirm</title>
+</head>
+<body>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h1 class="panel-title">予約情報</h1>
+			</div>
+			<div class="panel-body">
+				<div class="info">
+					<form th:each="reservationInfo:${reservationList}">
+						<input type="hidden" th:value="${reservationInfo.show_control_no}">
+						<input type="hidden" th:value="${reservationInfo.reservation_no}">
+						<input type="hidden" th:value="${reservationInfo.sheet_cd}">
+						<table class="table">
+							<tr>
+								<td th:text="${reservationInfo.movie_theater_name}"></td>
+								<td th:text="${reservationInfo.screen_name}"></td>
+								<td th:text="${reservationInfo.sheet_cd}"></td>
+								<td th:text="${reservationInfo.reservation_cd}"></td>
+							</tr>
+							<tr>
+								<td th:text="${reservationInfo.movie_title}"></td>
+								<td
+									th:text="|*{#dates.format(reservationInfo.movie_start_time,'yyyy-MM-dd HH:mm')} ~ *{#dates.format(reservationInfo.movie_end_time,'yyyy-MM-dd HH:mm')}|"></td>
+								<td>
+									<input type="button" value="キャンセル" class="btn btn-success confirmCancel" th:name="|*{reservationInfo.show_control_no} *{reservationInfo.reservation_no} *{reservationInfo.sheet_cd}|">
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+			<div class="panel-footer"></div>
+			<div id="modal-area">
+				<div id="contents-area">
+					<div id="msg">
+						<h2>選択した予約をキャンセルしてよろしいですか？</h2>
+					</div>
+					<form class="form-inline" id="ajaxRequestForm">
+						<div id="reservationForm" class="form-group">
+							<div class="reservationList"></div>
+						</div>
+					</form>
+					<div id="button-area">
+						<button type="button" class="btn btn-primary" id="cancel">キャンセル</button>
+						<button type="button" class="btn btn-danger" id="close">閉じる</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<form id="toUserPage" method="post" action="/toUserPage">
+	</form>
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+		<script type="text/javascript"
+		th:src="@{/js/cancel.js}"></script>
+</body>
+</html>

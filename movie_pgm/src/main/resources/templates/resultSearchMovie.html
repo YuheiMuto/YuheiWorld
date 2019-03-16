@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" media="all"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<title>上映中映画</title>
+</head>
+<body>
+	<div class="container">
+		<p th:text="${user.name}"></p>
+		<div class="searchMovie">
+			<form>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-xs-3">
+							<label for="search_title">タイトル検索</label> <input type="text"
+								class="form-control" id="search_title" name="search_title">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-xs-3">
+							<label for="search_category">ジャンル</label> <select
+								class="form-control" id="search_category" name="search_category">
+								<option value=""></option>
+								<option value="アクション">アクション</option>
+								<option value="恋愛">恋愛</option>
+								<option value="コメディ">コメディ</option>
+								<option value="ホラー">ホラー</option>
+								<option value="アニメ">アニメ</option>
+								<option value="その他">その他</option>
+								<option></option>
+							</select>
+						</div>
+					</div>
+					<input type="button" value="検索" name="mode" class="btn btn-primary"
+						id="search_btn" />
+				</div>
+			</form>
+		</div>
+		<br>
+		<div class="panel panel-primary" id="resultSearchMovie_panel">
+			<div class="panel-heading">
+				<h1 class="panel-title">上映中映画一覧</h1>
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr class="success">
+							<td>タイトル</td><td>ジャンル</td><td>あらすじ</td><td></td>
+						</tr>
+					</thead>
+					<tbody  id="movies">
+						<tr th:each="movie:${movies}">
+							<td th:text="${movie.getMovie_title()}"></td>
+							<td th:text="${movie.getCategory()}"></td>
+							<td th:text="${movie.getSummary()}"></td>
+							<td><a th:href="@{'/searchTheater/' + ${movie.getMovie_cd()}}">上映中の映画館一覧へ</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-footer"></div>
+		</div>
+
+		<script type="text/javascript"
+			th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+		<script type="text/javascript"
+			th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+		<script type="text/javascript">
+			$("#search_btn").click(function(){
+				$.ajax({
+					type : "POST",
+					url  : "/ajaxMovieSearch",
+					dataType : "json",
+					data:{
+						title : $("#search_title").val(),
+						category : $("#search_category").val()
+					}
+				
+				}).done(function(data){
+					console.log(data)
+					var html = ""
+					data.forEach(function(movie,index){
+						html +=(
+							"<tr><td>" + movie.movie_title + "</td>"
+							+ "<td>" + movie.category + "</td>"
+							+ "<td>" + movie.summary + "</td>"
+							+ "<td><a href='/searchTheater/" + movie.movie_cd + "'>上映中の映画館へ</a></td></tr>"
+						)
+					})
+					$('#movies').html(html)
+				}).fail(function(){
+					//T.B.Dエラー処理
+				});
+			});
+			function execPost(action) {
+				// フォームの生成
+				var form = document.createElement("form");
+				form.setAttribute("action", action);
+				form.setAttribute("method", "post");
+				form.style.display = "none";
+				document.body.appendChild(form);
+				// submit
+				form.submit();
+			}
+		</script>
+	</div>
+</body>
+</html>

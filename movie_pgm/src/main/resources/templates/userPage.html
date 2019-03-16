@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" media="all" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<title>top page</title>
+</head>
+<body>
+
+<div class="container">
+	<div class="panel panel-primary" id="userPage_panel">
+		<div class="panel-heading">
+			<h1 class="panel-title" th:text="|*{user.name}さん|"></h1>
+		</div>
+		<div class="panel-body">	
+			<div class="row">
+				<div class="col-xs-6">
+					<table class="table table-hover">
+						<thead>MENU</thead>
+						<tr><td><a onclick="execPost('/searchMovie');return false;" href="#">映画から探す</a></td></tr>
+						<tr><td><a onclick="execPost('/searchMovieTheater');return false;" href="#">映画館から探す</a></td></tr>
+						<tr><td><a onclick="execPost('/doCheckAndDelete');return false;" href="#">予約の確認・取り消し</a></td></tr>
+						<tr><td><a onclick="execPost('/logout');return false;" href="#">ログアウト</a></td></tr>			
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+		</div>
+	</div>
+</div>
+<script type="text/javascript" th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
+function execPost(action) {
+	 // フォームの生成
+	 var form = document.createElement("form");
+	 form.setAttribute("action", action);
+	 form.setAttribute("method", "post");
+	 form.style.display = "none";
+	 document.body.appendChild(form);
+	 // submit
+	 form.submit();
+	}
+</script>
+</body>
+</html>

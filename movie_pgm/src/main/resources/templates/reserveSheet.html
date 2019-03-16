@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" media="all"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" media="all" th:href="@{/css/reserveSheet.css}"/>
+<meta charset="UTF-8">
+<title>座席予約</title>
+</head>
+<body>
+	<form id="toUserPage" method="post" action="/login">
+		<input type="hidden" name="login_user_id" th:value="${user.user_id}">
+		<input type="hidden" name="login_password" th:value="${user.password}">
+	</form>
+	<div class="container">
+		<div class="panel panel-primary" id="resultSearchMovie_panel">
+			<div class="panel-heading">
+				<h1 class="panel-title" th:text="|*{data.getScreen_name()} *{data.getMovie_title()}|"></h1>
+			</div>
+			<div class="panel-body">
+			<div id = "Theater">
+				<div id="screen">
+				スクリーンの画像ないかなぁ
+				</div>
+				<div id="sheetArea">		
+					<table id="sheets">
+						<tr th:each="i : ${#numbers.sequence(0, 8)}">
+							<td  th:each="j : ${#numbers.sequence(0, 13)}" th:switch="${sheetList[i][j].getReservation_status()}" th:id="${sheetList[i][j].getSheet_cd()}" >
+								<img th:case="0" th:src="@{/img/green.jpg}">
+								<img th:case="1" th:src="@{/img/black.jpg}">
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			</div>
+			<form class="form-inline">
+				<div id="reservationForm" class="form-group">
+				<h2>選択中座席</h2>
+					<div class="reservationList"></div>
+				</div>
+			</form>
+			<button type="button" class="btn btn-primary" id="confirmReservation">予約する</button>
+			<div class="panel-footer"></div>
+		</div>
+	</div>
+	<div id="modal-area">
+		<div id="contents-area">
+			<div id="msg"><h2>選択した座席を予約してよろしいですか？</h2></div>
+				<form class="form-inline" id="ajaxRequestForm">
+					<div id="reservationForm" class="form-group">
+						<div class="reservationList"></div>
+					</div>
+					<input type="hidden" th:value="${data.getShow_control_no()}" id="showControlNo">
+				</form>
+			<div id="button-area">
+				<button type="button" class="btn btn-primary" id="reserve">予約</button>
+				<button type="button" class="btn btn-danger" id="close">閉じる</button>
+			</div>	
+		</div>
+	</div>
+	
+
+
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js/sheet.js}"></script>
+</body>
+</html>

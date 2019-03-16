@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" media="all" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="panel panel-primary" id="login_panel">
+		<div class="panel-heading">
+			<h1 class="panel-title">登録完了</h1>
+		</div>
+		<div class="panel-body">
+			<form method="GET" action="/toTopPage">
+				<p>トップページに戻ってログインしてください</p>
+				<input type="submit" value="戻る" class="btn btn-danger">
+			</form>
+		</div>
+		<div class="panel-footer"></div>
+	</div>
+	<script type="text/javascript" th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

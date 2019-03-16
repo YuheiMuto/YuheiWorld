@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movie.mapper.UserMapper">
+
+    <select id="selectUser" resultType="com.movie.domain.UserBean">
+        SELECT * FROM user_mast where user_id = #{user_id}
+    </select>
+    
+    <insert id="insertUser">
+  		insert into user_mast (user_id,name,birthday,pref_cd,password)
+  		values (#{user_id},#{name},#{birthday},#{pref_cd},#{password})
+	</insert>
+		
+	<select id="selectAllMovie"  resultType="com.movie.domain.MovieBean">
+	 	select * from movie_mast where show_status = '1'
+	</select>
+	
+	<select id="selectSearchMovie" resultType="com.movie.domain.MovieBean">
+		select * from movie_mast where show_status = '1'
+			<if test="m_title != null and m_title != ''">
+				and movie_title like '%${m_title}%'
+			</if>
+			<if test="m_category != null and m_category != ''">
+				and category = #{m_category}
+			</if>
+	</select>
+	
+	<select id="selectRunningTheater" resultType="com.movie.domain.MovieTheaterBean">
+		select distinct 
+			movie_theater_mast.movie_theater_cd,
+			movie_theater_mast.movie_theater_name,
+			movie_theater_mast.pref_cd,
+			prefecture.pref_name
+		from movie_theater_mast
+			 left outer join 
+			 	show_info 
+			 on movie_theater_mast.movie_theater_cd = show_info.movie_theater_cd 
+			 inner join 
+			 	prefecture 
+			 on movie_theater_mast.pref_cd = prefecture.pref_cd 
+		where 1 = 1	 
+		<if test="movie_cd != null">
+			and show_info.movie_cd = #{movie_cd}
+		</if>	 
+		order by movie_theater_mast.pref_cd;
+	</select>
+	
+	<select id="selectMovie" resultType="com.movie.domain.MovieBean">
+		select * from movie_mast where movie_cd = #{movie_cd}
+	</select>
+	
+	<select id="selectTheaterPageData" resultType="com.movie.domain.TheaterPageBean">
+		select distinct
+			show_info.show_control_no,
+			show_info.movie_theater_cd,
+			show_info.screen_cd,
+			show_info.movie_start_time,
+			show_info.movie_end_time,
+			show_info.movie_cd,
+			movie_theater_mast.movie_theater_name,
+			movie_mast.movie_title,
+			screen_mast.screen_name
+		from
+			show_info 
+				inner join 
+					movie_theater_mast 
+				on show_info.movie_theater_cd = movie_theater_mast.movie_theater_cd
+				inner join
+					movie_mast
+				on show_info.movie_cd = movie_mast.movie_cd
+				inner join
+					screen_mast
+				on show_info.screen_cd = screen_mast.screen_cd
+			where show_info.movie_theater_cd = #{theater_cd}
+	</select>
+	
+	<select id="selectSheetPageData" resultType="com.movie.domain.TheaterPageBean">
+		select distinct
+			show_info.show_control_no,
+			show_info.movie_theater_cd,
+			show_info.screen_cd,
+			show_info.movie_start_time,
+			show_info.movie_end_time,
+			show_info.movie_cd,
+			movie_theater_mast.movie_theater_name,
+			movie_mast.movie_title,
+			screen_mast.screen_name
+		from
+			show_info 
+				inner join 
+					movie_theater_mast 
+				on show_info.movie_theater_cd = movie_theater_mast.movie_theater_cd
+				inner join
+					movie_mast
+				on show_info.movie_cd = movie_mast.movie_cd
+				inner join
+					screen_mast
+				on show_info.screen_cd = screen_mast.screen_cd
+			where show_info.show_control_no = #{show_control_no}
+	</select>
+	
+	<select id="selectSheetList" resultType="com.movie.domain.SheetBean">
+		select * from sheet_mast 
+		where show_control_no = #{show_control_no} 
+		order by left(sheet_cd, 1), substring(sheet_cd, 2) + 0
+	</select>
+	
+	<select id="selectCheckSheet" resultType="com.movie.domain.SheetBean" >
+		select * from sheet_mast where show_control_no = #{show_control_no} and sheet_cd = #{sheet_cd}
+	</select>
+
+	<update id="updateSheetStatus">
+		update sheet_mast set reservation_status = 1 where show_control_no = #{show_control_no} and sheet_cd = #{sheet_cd}
+	</update>
+
+	<insert id="insertReservationInfo">
+		insert into reservation_info (
+			reservation_cd,
+			user_id,
+			show_control_no,
+			sheet_cd,
+			reservation_status
+		) values (
+			#{reservation_cd},
+			#{user_id},
+			#{show_control_no},
+			#{sheet_cd},
+			"1"
+		)
+	</insert>
+	
+	<select id="selectReservationInfo" resultType="com.movie.domain.ReservationInfoDispBean">
+		select distinct
+			reservation_info.reservation_no,
+		 	reservation_info.reservation_cd,
+		 	reservation_info.user_id,
+		 	reservation_info.show_control_no,
+		 	reservation_info.sheet_cd,
+		 	reservation_info.reservation_status,
+		 	movie_theater_mast.movie_theater_name,
+		 	movie_mast.movie_title,
+		 	screen_mast.screen_name,
+		 	show_info.movie_start_time,
+			show_info.movie_end_time
+			
+		from 
+			reservation_info
+			inner join
+				show_info
+			on reservation_info.show_control_no = show_info.show_control_no
+			inner join
+				movie_theater_mast
+			on show_info.movie_theater_cd = movie_theater_mast.movie_theater_cd
+			inner join
+				screen_mast
+			on show_info.screen_cd = screen_mast.screen_cd
+			inner join
+				movie_mast
+			on show_info.movie_cd = movie_mast.movie_cd
+		where 
+			reservation_info.user_id = #{user_id}
+		and
+			show_info.movie_start_time > date_sub(current_date(),interval 1 day)
+		and
+			reservation_info.reservation_status = 1
+	</select>
+	
+	<update id="updateReservationCancel">
+		update reservation_info set reservation_status = 2 where reservation_no = #{reservationNo}
+	</update>
+	
+	<update id="updateSheetCancel">
+		update sheet_mast set reservation_status = 0 where show_control_no = #{showControlNo} and sheet_cd = #{sheetCd}
+	</update>
+</mapper>

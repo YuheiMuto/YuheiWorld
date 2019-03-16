@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" media="all"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<meta charset="UTF-8">
+<style type="text/css">
+#headTable {
+	border: solid 2px black;
+	border-right: solid 2px black;
+	text-align: center;
+}
+
+.schedule {
+	display: none;
+}
+</style>
+<title>映画館</title>
+</head>
+<body>
+	<div class="container">
+		<p th:text="${user.name}"></p>
+		<div class="panel panel-primary" id="resultSearchMovie_panel">
+			<div class="panel-heading">
+				<h1 class="panel-title" th:text="${data[0].getMovie_theater_name()}"></h1>
+			</div>
+			<div class="panel-body">
+				<table class="table table-bordered" id="headTable">
+					<tbody>
+						<tr>
+							<td class="success schedule_btn" th:each="day:${weekly}"
+								th:text="${#dates.format(day,'MM/dd')}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-striped schedule">
+					<thead>
+						<tr>
+							<td th:text="|*{#dates.format(weekly[0],'yyyy-MM-dd')}　上映情報|"></td>
+						</tr>
+						<tr>
+							<td>スクリーン</td>
+							<td>映画</td>
+							<td>開始時刻</td>
+							<td>終了時刻</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="value:${data}"
+							th:if="${#dates.format(value.getMovie_start_time(),'yyyy-MM-dd')} == ${#dates.format(new java.util.Date(),'yyyy-MM-dd')}">
+							<td th:text="${value.getScreen_name() }"></td>
+							<td th:text="${value.getMovie_title() }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_start_time(),'HH:mm') }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_end_time(),'HH:mm') }"></td>
+							<td><a
+								th:href="@{'/reserveSheet/' + ${value.getShow_control_no()}}">座席予約へ</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-striped schedule">
+					<thead>
+						<tr>
+							<td th:text="|*{#dates.format(weekly[1],'yyyy-MM-dd')}　上映情報|"></td>
+						</tr>
+						<tr>
+							<td>スクリーン</td>
+							<td>映画</td>
+							<td>開始時刻</td>
+							<td>終了時刻</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="value:${data}"
+							th:if="${#dates.format(value.getMovie_start_time(),'yyyy-MM-dd')} == ${#dates.format(weekly[1],'yyyy-MM-dd')}">
+							<td th:text="${value.getScreen_name() }"></td>
+							<td th:text="${value.getMovie_title() }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_start_time(),'HH:mm') }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_end_time(),'HH:mm') }"></td>
+							<td><a
+								th:href="@{'/reserveSheet/' + ${value.getShow_control_no()}}">座席予約へ</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-striped schedule">
+					<thead>
+						<tr>
+							<td th:text="|*{#dates.format(weekly[2],'yyyy-MM-dd')}　上映情報|"></td>
+						</tr>
+						<tr>
+							<td>スクリーン</td>
+							<td>映画</td>
+							<td>開始時刻</td>
+							<td>終了時刻</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="value:${data}"
+							th:if="${#dates.format(value.getMovie_start_time(),'yyyy-MM-dd')} == ${#dates.format(weekly[2],'yyyy-MM-dd')}">
+							<td th:text="${value.getScreen_name() }"></td>
+							<td th:text="${value.getMovie_title() }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_start_time(),'HH:mm') }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_end_time(),'HH:mm') }"></td>
+							<td><a
+								th:href="@{'/reserveSheet/' + ${value.getShow_control_no()}}">座席予約へ</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-striped schedule">
+					<thead>
+						<tr>
+							<td th:text="|*{#dates.format(weekly[3],'yyyy-MM-dd')}　上映情報|"></td>
+						</tr>
+						<tr>
+							<td>スクリーン</td>
+							<td>映画</td>
+							<td>開始時刻</td>
+							<td>終了時刻</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="value:${data}"
+							th:if="${#dates.format(value.getMovie_start_time(),'yyyy-MM-dd')} == ${#dates.format(weekly[3],'yyyy-MM-dd')}">
+							<td th:text="${value.getScreen_name() }"></td>
+							<td th:text="${value.getMovie_title() }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_start_time(),'HH:mm') }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_end_time(),'HH:mm') }"></td>
+							<td><a
+								th:href="@{'/reserveSheet/' + ${value.getShow_control_no()}}">座席予約へ</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-striped schedule">
+					<thead>
+						<tr>
+							<td th:text="|*{#dates.format(weekly[4],'yyyy-MM-dd')}　上映情報|"></td>
+						</tr>
+						<tr>
+							<td>スクリーン</td>
+							<td>映画</td>
+							<td>開始時刻</td>
+							<td>終了時刻</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="value:${data}"
+							th:if="${#dates.format(value.getMovie_start_time(),'yyyy-MM-dd')} == ${#dates.format(weekly[4],'yyyy-MM-dd')}">
+							<td th:text="${value.getScreen_name() }"></td>
+							<td th:text="${value.getMovie_title() }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_start_time(),'HH:mm') }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_end_time(),'HH:mm') }"></td>
+							<td><a
+								th:href="@{'/reserveSheet/' + ${value.getShow_control_no()}}">座席予約へ</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-striped schedule">
+					<thead>
+						<tr>
+							<td th:text="|*{#dates.format(weekly[5],'yyyy-MM-dd')}　上映情報|"></td>
+						</tr>
+						<tr>
+							<td>スクリーン</td>
+							<td>映画</td>
+							<td>開始時刻</td>
+							<td>終了時刻</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="value:${data}"
+							th:if="${#dates.format(value.getMovie_start_time(),'yyyy-MM-dd')} == ${#dates.format(weekly[5],'yyyy-MM-dd')}">
+							<td th:text="${value.getScreen_name() }"></td>
+							<td th:text="${value.getMovie_title() }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_start_time(),'HH:mm') }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_end_time(),'HH:mm') }"></td>
+							<td><a
+								th:href="@{'/reserveSheet/' + ${value.getShow_control_no()}}">座席予約へ</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-striped schedule">
+					<thead>
+						<tr>
+							<td th:text="|*{#dates.format(weekly[6],'yyyy-MM-dd')}　上映情報|"></td>
+						</tr>
+						<tr>
+							<td>スクリーン</td>
+							<td>映画</td>
+							<td>開始時刻</td>
+							<td>終了時刻</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="value:${data}"
+							th:if="${#dates.format(value.getMovie_start_time(),'yyyy-MM-dd')} == ${#dates.format(weekly[6],'yyyy-MM-dd')}">
+							<td th:text="${value.getScreen_name() }"></td>
+							<td th:text="${value.getMovie_title() }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_start_time(),'HH:mm') }"></td>
+							<td
+								th:text="${#dates.format(value.getMovie_end_time(),'HH:mm') }"></td>
+							<td><a
+								th:href="@{'/reserveSheet/' + ${value.getShow_control_no()}}">座席予約へ</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="panel-footer"></div>
+		</div>
+	</div>
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('.schedule').hide();
+			$('.schedule').eq(0).show();
+			$('.schedule_btn').eq(0).addClass('is-active');
+			$('.schedule_btn').each(function() {
+				$(this).on('click', function() {
+					var index = $('.schedule_btn').index(this);
+					$('.schedule_btn').removeClass('is-active');
+					$(this).addClass('is-active');
+					$('.schedule').hide();
+					$('.schedule').eq(index).show();
+				});
+			});
+
+		});
+	</script>
+</body>
+</html>

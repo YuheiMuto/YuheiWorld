@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" media="all" th:href="@{/css/index.css}"/>
+<link rel="stylesheet" media="all" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+
+<title>movie_system</title>
+</head>
+<body>
+
+<div class="container">
+	<h1 class="page-header">学習用</h1>
+	<div class="panel panel-primary" id="register_panel">
+		<div class="panel-heading">
+			<h1 class="panel-title">新規登録の方はこちら</h1>
+		</div>
+		<div class="panel-body">
+			<form id="registerForm" method="post" action="/register" onsubmit="return registerCheck();">
+				<div class="row">
+					<div class="form-group">
+						<div class="col-xs-6">
+							<label for="username">名前</label>
+							<input type="text" class="form-control" id="register_username" name="register_username">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-xs-3">
+							<label for="birthday">生年月日</label>
+							<input type="date" class="form-control" id="birthday" name="birthday">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-xs-3">
+							<label for="pref_cd">都道府県</label>
+							<select  class="form-control" id="pref_cd" name="pref_cd">
+								<option value="1">北海道</option>
+								<option value="2">青森県</option>
+								<option value="3">岩手県</option>
+								<option value="4">宮城県</option>
+								<option value="5">秋田県</option>
+								<option value="6">山形県</option>
+								<option value="7">福島県</option>
+								<option value="8">茨城県</option>
+								<option value="9">栃木県</option>
+								<option value="10">群馬県</option>
+								<option value="11">埼玉県</option>
+								<option value="12">千葉県</option>
+								<option value="13">東京都</option>
+								<option value="14">神奈川県</option>
+								<option value="15">新潟県</option>
+								<option value="16">富山県</option>
+								<option value="17">石川県</option>
+								<option value="18">福井県</option>
+								<option value="19">山梨県</option>
+								<option value="20">長野県</option>
+								<option value="21">岐阜県</option>
+								<option value="22">静岡県</option>
+								<option value="23">愛知県</option>
+								<option value="24">三重県</option>
+								<option value="25">滋賀県</option>
+								<option value="26">京都府</option>
+								<option value="27">大阪府</option>
+								<option value="28">兵庫県</option>
+								<option value="29">奈良県</option>
+								<option value="30">和歌山県</option>
+								<option value="31">鳥取県</option>
+								<option value="32">島根県</option>
+								<option value="33">岡山県</option>
+								<option value="34">広島県</option>
+								<option value="35">山口県</option>
+								<option value="36">徳島県</option>
+								<option value="37">香川県</option>
+								<option value="38">愛媛県</option>
+								<option value="39">高知県</option>
+								<option value="40">福岡県</option>
+								<option value="41">佐賀県</option>
+								<option value="42">長崎県</option>
+								<option value="43">熊本県</option>
+								<option value="44">大分県</option>
+								<option value="45">宮崎県</option>
+								<option value="46">鹿児島県</option>
+								<option value="47">沖縄県</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-xs-3">
+							<label for="user_id">ユーザーID:半角英数8文字</label>
+							<input type="text" class="form-control" id="register_user_id" name="register_user_id">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-xs-3">
+							<label for="password">パスワード：半角数字4文字</label>
+							<input type="password" class="form-control" id="register_password" name="register_password">
+						</div>
+					</div>
+				</div>
+				<input type="submit" value="新規登録" name="mode" class="btn btn-primary" id="register_btn"  />
+			</form>
+			<div>
+				<p th:text="${msg}"></p>
+			</div>
+		</div>
+		<div class="panel-footer">
+		</div>
+	</div>
+	
+	<div class="panel panel-primary" id="login_panel">
+		<div class="panel-heading">
+			<h1 class="panel-title">ログインの方はこちら</h1>
+		</div>
+		<div class="panel-body">
+			<form id="loginForm" method="post" action="/login" onsubmit="return loginCheck();">
+				<div class="row">
+					<div class="form-group">
+						<div class="col-xs-3">
+							<label for="user_id">ユーザーID:半角英数8文字以内</label>
+							<input type="text" class="form-control" id="login_user_id" name="login_user_id">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-xs-3">
+							<label for="password">パスワード：半角数字4文字</label>
+							<input type="password" class="form-control" id="login_password" name="login_password" >
+						</div>
+					</div>
+				</div>
+				<input type="submit" value="ログイン" class="btn btn-primary" name="mode" id="login_btn"/>
+			</form>
+			<div>
+				<p th:text="${msg2}"></p>
+			</div>
+		</div>
+		<div class="panel-footer">
+		</div>
+	</div>
+	
+</div>
+
+
+<script type="text/javascript" th:src="@{/webjars/jquery/1.12.4/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/index.js}"></script>
+</body>
+</html>
