@@ -79,6 +79,6 @@ public class IndexController {
 	}
 	@RequestMapping(value = "/toTopPage", method = RequestMethod.GET)
 	String toTopPage() {
-		return "/index";
+		return "index";
 	}
 }

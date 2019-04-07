@@ -1,9 +1,14 @@
 /**
  * 座席予約ページ
  */
-var GREEN_IMG = "http://localhost:8080/img/green.jpg";
-var WHITE_IMG = "http://localhost:8080/img/white.jpg";
-var BLACK_IMG = "http://localhost:8080/img/black.jpg";
+var GREEN_IMG = "https://mymoviesys.azurewebsites.net/img/green.jpg";
+var WHITE_IMG = "https://mymoviesys.azurewebsites.net/img/white.jpg";
+var BLACK_IMG = "https://mymoviesys.azurewebsites.net/img/black.jpg";
+var BLACK_IMG = "https://mymoviesys.azurewebsites.net/img/black.jpg";
+//var GREEN_IMG = "http://localhost:8080/img/green.jpg";
+//var WHITE_IMG = "http://localhost:8080/img/white.jpg";
+//var BLACK_IMG = "http://localhost:8080/img/black.jpg";
+
 var GREEN_IMG_TAG = "/img/green.jpg";
 var WHITE_IMG_TAG = "/img/white.jpg";
 var BLACK_IMG_TAG = "/img/black.jpg";

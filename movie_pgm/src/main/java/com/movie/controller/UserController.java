@@ -53,7 +53,7 @@ public class UserController {
 	String searchMovie(Model model) {
 		List<MovieBean> movies = userMapper.selectAllMovie();
 		model.addAttribute("movies", movies);
-		return "/resultSearchMovie";
+		return "resultSearchMovie";
 	}
 
 	// 映画検索Ajax
@@ -75,7 +75,7 @@ public class UserController {
 
 		model.addAttribute("movie", movie);
 		model.addAttribute("theaterList", theaterList);
-		return "/resultSearchRunningTheater";
+		return "resultSearchRunningTheater";
 	}
 
 	// 映画館ページへ遷移
@@ -96,8 +96,8 @@ public class UserController {
 		List<TheaterPageBean> theaterPageData = userMapper.selectTheaterPageData(theater_cd);
 		model.addAttribute("data", theaterPageData);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		System.out.println(sdf.format(theaterPageData.get(0).getMovie_start_time()));
-		return "/theaterPage";
+		//System.out.println(sdf.format(theaterPageData.get(0).getMovie_start_time()));
+		return "theaterPage";
 	}
 
 	// 映画館から探す
@@ -105,7 +105,7 @@ public class UserController {
 	String searchFromTheater(Model model) {
 		List<MovieTheaterBean> theaterList = userMapper.selectRunningTheater(null);
 		model.addAttribute("theaterList", theaterList);
-		return "/resultSearchMovieTheater";
+		return "resultSearchMovieTheater";
 
 	}
 
@@ -123,7 +123,7 @@ public class UserController {
 		}
 		model.addAttribute("sheetList", sheetList);
 		model.addAttribute("data", data);
-		return "/reserveSheet";
+		return "reserveSheet";
 	}
 
 	// 座席予約(Ajax)
@@ -164,7 +164,7 @@ public class UserController {
 	String doCheckAndDelete(Model model) {
 		List<ReservationInfoDispBean> reservationList = userMapper.selectReservationInfo(userBean.getUser_id());
 		model.addAttribute("reservationList", reservationList);
-		return "/reservationConfirm";
+		return "reservationConfirm";
 	}
 
 	// 予約キャンセル
@@ -192,7 +192,7 @@ public class UserController {
 	// ユーザーページへ戻る
 	@RequestMapping(value = "/toUserPage", method = RequestMethod.POST)
 	String toUserPage() {
-		return "/userPage";
+		return "userPage";
 	}
 
 	// ログアウト
@@ -200,7 +200,7 @@ public class UserController {
 	String logout(SessionStatus sessionStatus) {
 		// sessionを破棄
 		sessionStatus.setComplete();
-		return "/index";
+		return "index";
 
 	}
 }
